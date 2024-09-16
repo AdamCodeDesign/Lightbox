@@ -9,7 +9,7 @@ const lightbox = {
     this.loadImages();
   },
 
-  loadImages: function (keywordsArr, imgSize = "300/300") {
+  loadImages: function (keywordsArr, imgSize = "800/800") {
     let keywords = [
       "car",
       "forest",
@@ -18,7 +18,7 @@ const lightbox = {
       "flower",
       "stars",
       "ocean",
-      "game"
+      "game",
     ];
 
     if (keywordsArr) keywords = keywordsArr;
@@ -31,7 +31,25 @@ const lightbox = {
       htmlCode += `<img src='${url}'>`;
     }
 
-    this.gallery.innerHTML = htmlCode
+    this.gallery.innerHTML = htmlCode;
+    this.addListeners();
+  },
+
+  addListeners: function () {
+    const images = document.querySelectorAll(".gallery img");
+    images.forEach((img) =>
+      img.addEventListener("click", (e) => this.show(img))
+    );
+
+    this.container.addEventListener("click", (e) => this.hide());
+  },
+
+  show: function (img) {
+    this.lightboxImg.src = img.src;
+    this.container.classList.add("active");
+  },
+  hide: function () {
+    this.container.classList.remove("active");
   },
 };
 
